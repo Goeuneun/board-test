@@ -1,4 +1,9 @@
-### Spring Board CRUD
+### Spring Board  기본 CRUD
+페이지가 못생긴 이유는 따로 스타일 지정을 안했음 데헷~
+
+<img width="541" alt="image" src="https://user-images.githubusercontent.com/101301507/200513670-ae98a454-db78-43c3-aba1-33342a9332aa.png">
+
+
 스프링 환경설정하면서 발생한 주요 이슈
 
 1. java.lang.java.lang.ExceptionInInitializerError
@@ -25,3 +30,10 @@ org.apache.catalina.core.StandardContext backgroundProcess 경고: 로더 [Webap
 MySQL 설치 후 테이블 설계하고 생성 - connector j jar파일 jdk, jre 디렉터리에 복붙하고 버전 잘봐서 pom.xml 파일에 버전 맞춰서 dependency 태그 추가함  VO 클래스도 생성함
 
 컨트롤러 - 매퍼 - jsp 순으로 만들어줬음..
+----
+회원가입, 중복체크 등 수정 및 삭제는 관리자나 글쓴이만 가능하게(id로 판별함)
+<img width="398" alt="image" src="https://user-images.githubusercontent.com/101301507/200514027-9c1d1c62-fb8b-44cf-b75b-e7e2edd3feed.png">
+
+------
+파일업로드도 진행해볼 예정이다.
+
