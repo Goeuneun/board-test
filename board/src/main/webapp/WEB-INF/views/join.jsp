@@ -14,6 +14,7 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 	<div class="container p-3 my-3">
@@ -23,27 +24,31 @@
 		<form action="joinInsert" class="was-validated" method="post">
 			<div class="form-group">
 				<label for="id">Id:</label> <input type="text" class="form-control"
-					id="uname" placeholder="아이디를 입력하세요" name="id" required>
-				<div class="valid-feedback">입력값이 유효합니다.</div>
+					id="id" placeholder="아이디를 입력하세요" name="id" required="required">
+
+				<button type="button" id="idCheck" class="btn btn-warning btn-sm">중복체크</button>
+				<div class="valid-feedback">
+					<span id="idValid"> </span>
+				</div>
 				<div class="invalid-feedback">입력되지 않았습니다.</div>
 			</div>
 			<div class="form-group">
 				<label for="pwd">Password:</label> <input type="password"
-					class="form-control" id="pwd" placeholder="비밀번호를 입력하세요" name="pw"
-					required>
+					class="form-control join" id="pwd" placeholder="비밀번호를 입력하세요"
+					name="pw" required>
 				<div class="valid-feedback">입력값이 유효합니다.</div>
 				<div class="invalid-feedback">입력되지 않았습니다.</div>
 			</div>
 			<div class="form-group">
 				<label for="nick">Nick name:</label> <input type="text"
-					class="form-control" id="nick" placeholder="닉네임을 입력하세요" name="nick"
-					required>
+					class="form-control join" id="nick" placeholder="닉네임을 입력하세요"
+					name="nick" required>
 				<div class="valid-feedback">입력값이 유효합니다.</div>
 				<div class="invalid-feedback">입력되지 않았습니다.</div>
 			</div>
 			<div class="form-group">
 				<label for="phone">Phone Number:</label> <input type="text"
-					class="form-control" id="phone" placeholder="휴대전화번호를 입력하세요"
+					class="form-control join" id="phone" placeholder="휴대전화번호를 입력하세요"
 					name="phone" required>
 				<div class="valid-feedback">입력값이 유효합니다.</div>
 				<div class="invalid-feedback">입력되지 않았습니다.</div>
@@ -56,4 +61,42 @@
 		</form>
 	</div>
 </body>
+<script>
+
+	$('.join').click(function(){
+		if(this.getAttribute('readonly') == "readonly"){
+			alert('아이디 중복체크를 먼저 해주세요')
+		}
+	});
+	
+	$('#idCheck').click(function(){
+		var id = $('#id').val();
+		$.ajax({
+			url : "idCheck",
+			type : "post",
+			data : {"id" : id},
+			success : idcheckJson,		//함수호출
+			error : function(e){
+				console.log(e);
+			}
+		});
+	});
+	
+	function idcheckJson(data){
+		console.log(data.id);
+		if(data.id == undefined){			// 값이 null일때 
+			console.log("아이디사용 가능");
+			$('.join').removeAttr('readonly');
+			$('#idValid').text('사용 가능한 아이디입니다.');
+			$('#idValid').css('color','blue');
+		} else {
+			console.log("아이디사용 불가능");
+			$('.join').attr('readonly',true);
+			$('#idValid').text('중복된 아이디입니다.');
+			$('#idValid').css('color','red');
+		}
+		
+	};
+
+</script>
 </html>

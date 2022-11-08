@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.web.mapper.MemberMapper;
 import kr.web.vo.MemberVO;
@@ -74,6 +75,18 @@ public class MemberController {
 	
 	}
 	
+	
+	
+	//id체크
+	@RequestMapping("/idCheck")
+	public @ResponseBody MemberVO idCheck(String id) {
+		System.out.println("아이디 중복체크 실행 : "+id);
+		MemberVO vo = mapper.idCheck(id);
+		System.out.println(vo);
+		return vo;
+	}
+	
+	
 	// 멤버 목록
 	@RequestMapping("/memberlist")
 	public List<MemberVO> memberlist(Model model){
@@ -81,6 +94,7 @@ public class MemberController {
 		model.addAttribute("mem_vo", vo);
 		return vo;
 	}
+	
 	
 	
 	
