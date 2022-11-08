@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.web.mapper.BoardMapper">
+
+	<select id="boardlist" resultType="kr.web.vo.BoardVO">
+		select * 
+		from board 
+		order by indate desc;
+	</select>
+	
+	<select id="boardContent" parameterType="int" resultType="kr.web.vo.BoardVO">
+		select * 
+		from board 
+		where idx=#{idx}
+	</select>
+	
+	<update id="countUpdate" parameterType="int">
+		update board
+		set count = count + 1
+		where idx = #{idx}
+	</update>
+	
+	<insert id="boardInsert" parameterType="kr.web.vo.BoardVO">
+		insert into board(title, contents, writer)
+		values(#{title}, #{contents}, #{writer})
+	</insert>
+	
+	<update id="boardUpdate" parameterType="kr.web.vo.BoardVO">
+		update board 
+		set title = #{title}, contents = #{contents}
+		where idx = #{idx}
+	</update>
+	
+	<delete id="boardDelete" parameterType="int">
+		delete from board
+		where idx = #{idx}
+	</delete>
+	
+</mapper>
