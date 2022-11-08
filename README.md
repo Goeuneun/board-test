@@ -1,4 +1,4 @@
-### Spring Board  기본 CRUD
+## Spring Board  기본 CRUD
 페이지가 못생긴 이유는 따로 스타일 지정을 안했음 데헷~
 
 <img width="541" alt="image" src="https://user-images.githubusercontent.com/101301507/200513670-ae98a454-db78-43c3-aba1-33342a9332aa.png">
@@ -25,13 +25,15 @@ org.apache.catalina.core.StandardContext backgroundProcess 경고: 로더 [Webap
 - 해결 : tomcat lib 폴더에 있는 servlet-api.jar 파일을 사용하고 있는 jdk 설치 폴더(C:\Program Files\Java\jdk1.7.0_65\lib) 에 붙여넣기
 
 -------
-각 xml 파일 등 환경설정, 라이브러리 추가 해준 후 테스트 파일도 설계하여 테스팅 해봄
+#### 각 xml 파일 등 환경설정, 라이브러리 추가 해준 후 테스트 파일도 설계하여 테스팅 해봄
 
-MySQL 설치 후 테이블 설계하고 생성 - connector j jar파일 jdk, jre 디렉터리에 복붙하고 버전 잘봐서 pom.xml 파일에 버전 맞춰서 dependency 태그 추가함  VO 클래스도 생성함
-
+#### MySQL 설치 후 테이블 설계하고 생성 - connector j jar파일 jdk, jre 디렉터리에 복붙하고 버전 잘봐서 pom.xml 파일에 버전 맞춰서 dependency 태그 추가함  VO 클래스도 생성함
 컨트롤러 - 매퍼 - jsp 순으로 만들어줬음..
+
+
 ----
-회원가입, 중복체크 등 수정 및 삭제는 관리자나 글쓴이만 가능하게(id로 판별함)
+### 회원가입, 중복체크 등 수정 및 삭제는 관리자나 글쓴이만 가능하게(id로 판별함)
+
 <img width="398" alt="image" src="https://user-images.githubusercontent.com/101301507/200514027-9c1d1c62-fb8b-44cf-b75b-e7e2edd3feed.png">
 
 ------
