@@ -10,14 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.web.mapper.MemberMapper;
+import kr.web.service.MemberService;
 import kr.web.vo.MemberVO;
 
 @Controller
 public class MemberController {
 	
 	@Inject
-	private MemberMapper mapper;
+	private MemberService service;
 
 	//페이지이동
 	@RequestMapping("/login")
@@ -47,7 +47,7 @@ public class MemberController {
 	@RequestMapping("/joinInsert")
 	public String joinInsert(MemberVO vo) {
 		System.out.println("회원가입실행"+vo.toString());
-		mapper.joinInsert(vo);
+		service.register(vo);
 		return "redirect:/login";
 		
 	}
@@ -56,7 +56,7 @@ public class MemberController {
 	@RequestMapping("/loginSelect") 
 	public String loginSelect(HttpSession session, MemberVO vo) {
 		System.out.println("로그인기능실행");
-		MemberVO info =  mapper.loginSelect(vo);
+		MemberVO info =  service.login(vo);
 		System.out.println(info);
 		if(info!=null) {
 			session.setAttribute("info", info);
@@ -69,7 +69,7 @@ public class MemberController {
 	@RequestMapping("/updateInfo")
 	public String updateInfo(HttpSession session, MemberVO vo) {
 		System.out.println("회원정보수정실행"+vo.toString());
-		mapper.updateInfo(vo);
+		service.update(vo);
 		session.setAttribute("info", vo);
 		return "redirect:/boardlist";
 	
@@ -81,7 +81,7 @@ public class MemberController {
 	@RequestMapping("/idCheck")
 	public @ResponseBody MemberVO idCheck(String id) {
 		System.out.println("아이디 중복체크 실행 : "+id);
-		MemberVO vo = mapper.idCheck(id);
+		MemberVO vo = service.idCheck(id);
 		System.out.println(vo);
 		return vo;
 	}
@@ -90,7 +90,7 @@ public class MemberController {
 	// 멤버 목록
 	@RequestMapping("/memberlist")
 	public List<MemberVO> memberlist(Model model){
-		List<MemberVO> vo = mapper.memberlist();
+		List<MemberVO> vo = service.memberlistAll();
 		model.addAttribute("mem_vo", vo);
 		return vo;
 	}
