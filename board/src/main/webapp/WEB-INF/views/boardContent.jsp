@@ -55,6 +55,7 @@
 				<input type="hidden" id="idx" name="idx" value="${vo.idx}"/>
 				<input type="hidden" name="pageNum" value="${cri.pageNum}"/>
 				<input type="hidden" name="amount" value="${cri.amount}"/>
+				<input type="hidden" name="keyword" value="${cri.keyword }"/>
 			</form>
 		</div>
 	</div>

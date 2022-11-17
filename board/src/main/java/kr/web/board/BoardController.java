@@ -33,10 +33,8 @@ public class BoardController {
 			Model model) throws Exception {
 
 		// 전체 게시글 개수
-		int total = service.boardTotal();	
 //		Paging pg = new Paging();
-		Search search = new Search(searchType, keyword);
-		search.pageInfo(viewPage, range, total);
+//		search.pageInfo(viewPage, range, total);
 		
 		//int totalPage = (int) Math.ceil((double) total / 10);
 		//int startIndex = (pg.getViewPage() - 1) * 10 + 1;
@@ -49,33 +47,23 @@ public class BoardController {
 //		int page2 = total -10;
 //		int page3 = total -20;
 //		int page4 = total -40;
-
-		// 게시글 행번호 출력하기위해 전체 - 현재페이지시작번호
-		//int rowNo = total - (pg.getViewPage() - 1) * 10;
-		//model.addAttribute("rowNo", rowNo);
-
-		System.out.println("게시판 목록 보기");
-		model.addAttribute("list", service.paginList(search));
-		model.addAttribute("pg", search);
+//
+//		// 게시글 행번호 출력하기위해 전체 - 현재페이지시작번호
+//		//int rowNo = total - (pg.getViewPage() - 1) * 10;
+//		//model.addAttribute("rowNo", rowNo);
+//
+//		System.out.println("게시판 목록 보기");
+//		model.addAttribute("list", service.paginList(search));
+//		model.addAttribute("pg", search);
 	}
 	
 	@RequestMapping("/listPage")
 	public void listPage(Criteria cri, Model model) throws Exception {
 		model.addAttribute("list", service.listCriteria(cri));
-		model.addAttribute("pageMaker", new PageMaker(cri, service.boardTotal()));
+		model.addAttribute("pageMaker", new PageMaker(cri, service.boardTotal(cri)));
 		
 	}
 
-//	@RequestMapping("/listPage")
-//	public void listPage(@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
-//		System.out.println("게시판 목록 보기");
-//		model.addAttribute("list", service.listCriteria(cri));
-//		PageMaker pageMaker = new PageMaker();
-//		pageMaker.setCri(cri);
-//		// pageMaker.setTotalCount(10);
-//		pageMaker.setTotalCount(service.countPaging(cri));
-//		model.addAttribute("pageMaker", pageMaker);
-//	}
 
 	// 특정 게시글 조회 get
 	@RequestMapping("/boardContent")

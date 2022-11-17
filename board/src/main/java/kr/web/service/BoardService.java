@@ -29,5 +29,5 @@ public interface BoardService {
 	
 	public int countPaging(Criteria cri) throws Exception;
 
-	public int boardTotal() throws Exception;
+	public int boardTotal(Criteria cri) throws Exception;
 }

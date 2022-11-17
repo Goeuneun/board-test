@@ -78,23 +78,5 @@ public class Criteria {
 		this.typeArr = typeArr;
 	}
 
-//	public void setpage(int perPageNum) {
-//		if (perPageNum <= 0 || perPageNum > 100) {
-//			this.perPageNum = 10;
-//			return;
-//		}
-//	}
-//
-//	public int getPage() {
-//		return page;
-//	}
-//
-//	public int getPageStart() {
-//		return (this.page - 1) * perPageNum;
-//	}
-//
-//	public int getPerPageNum() {
-//		return this.perPageNum;
-//	}
 
 }

@@ -57,7 +57,8 @@
 				<form id="infoForm" action="boardUpdate" method="get">
 					<input type="hidden" id="bno" name="bno" value='<c:out value="${vo.idx}"/>'>
 					<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
-					<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>	
+					<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
+					 <input type="hidden" name="keyword" value="${cri.keyword }"/>	
 				</form>
 
 			</div>

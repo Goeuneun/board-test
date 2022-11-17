@@ -68,6 +68,10 @@
 				</table>
 
 			</div>
+			
+			
+			<!-- 페이징 -->
+		<div class="card-footer">	
 			<div class="pageInfo_wrap">
 				<div class="pageInfo_area">
 					<ul class="pagination" style="float: center;">
@@ -89,63 +93,97 @@
 					</ul>
 				</div>
 			</div>
+						
+			<!-- 검색 -->
+
+			<div class="form-group row justify-content-center">
+			<div class="search_area" >
+					<select class="form-control form-control-sm" name="type"
+						id="searchType">
+						<option value=""> </option>
+						<option value="title">제목</option>
+						<option value="contents">본문</option>
+						<option value="writer">작성자</option>
+					</select>
+					<input type="text" class="form-control form-control-sm"
+						name="keyword" value="${pageMaker.cri.keyword }" id="keyword">
+				<div>
+					<button class="btn btn-sm btn-primary" name="btnSearch"
+						id="btnSearch">검색</button>
+				</div>
+				</div>
+			</div>
 			<form id="actionForm" action="listPage" method="get">
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" />
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount}" />
+				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">	
 			</form>
-			<span>로그인한 회원만 글쓰기가 가능합니다.</span>
+			</div>
 		</div>
 	</div>
-<script>
-
+	<script>
 		// document.ready 는  페이지 로딩 시 반드시 실행이 되는
-	$(document).ready(function() {
-		let result = '<c:out value = "${result}"/>'
-		checkAlert(result);
-		console.log(result);
-		
-		function checkAlert(result){
-			if(result === ''){
-				return;
+		$(document).ready(function() {
+			let result = '<c:out value = "${result}"/>'
+			checkAlert(result);
+			console.log(result);
+
+			function checkAlert(result) {
+				if (result === '') {
+					return;
+				}
+				if (result === "enrol success") {
+					alert("등록이 완료되었습니다.");
+				}
+
+				if (result === "modify success") {
+					alert("수정이 완료되었습니다.");
+				}
+
+				if (result === "delete success") {
+					alert("삭제가 완료되었습니다.");
+				}
 			}
-			if(result === "enrol success"){
-				alert("등록이 완료되었습니다.");
-			}
-			
-			if(result === "modify success"){
-				alert("수정이 완료되었습니다.");
-			}
-			
-			if(result === "delete success"){
-				alert("삭제가 완료되었습니다.");
-			}
-		}
-		 
-	});	 
+
+		});
 		let actionForm = $("#actionForm");
-		
-		 // 페이징 안에서 a태그 찾기
+
+		// 페이징 안에서 a태그 찾기
 		$(".page-item a").on("click", function(e) {
 			e.preventDefault(); // page-item클래스의 a태그 페이지이동속성 없애는 작업
 			console.log('click');
-		 // form 태그 내부 pageNum과 관련된 input태그의 value 속성을 클릭한 a 태그의 페이지 번호를 삽입 
+			// form 태그 내부 pageNum과 관련된 input태그의 value 속성을 클릭한 a 태그의 페이지 번호를 삽입 
 			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-		 // =>  form태그 서버 전송
-			actionForm.submit();
-		});
-		
-		 
-		 
-		//제목을 클릭하면 idx값전송하기위해 폼에 input태그 추가하고 action의 url을boardContent 변경 
-		//-> 클릭했을 때 pageNum, amount,idx를 보내게됨
-		
-		$(".move").on("click", function(e){
-			e.preventDefault();
-			actionForm.append("<input type='hidden' name = 'idx' value= ' " + $(this).attr("href") + " '>");
-			actionForm.attr("action", "boardContent");
+			// =>  form태그 서버 전송
+			actionForm.attr("action", "listPage");
 			actionForm.submit();
 		});
 
-</script>
+		//제목을 클릭하면 idx값전송하기위해 폼에 input태그 추가하고 action의 url을boardContent 변경 
+		//-> 클릭했을 때 pageNum, amount,idx를 보내게됨
+
+		$(".move")
+				.on(
+						"click",
+						function(e) {
+							e.preventDefault();
+							actionForm
+									.append("<input type='hidden' name = 'idx' value= ' "
+											+ $(this).attr("href") + " '>");
+							actionForm.attr("action", "boardContent");
+							actionForm.submit();
+						});
+		
+		$(".search_area button").on("click",function(e){
+			e.preventDefault();
+			let inputVal = $("input[name='keyword']").val();	//입력받은 키워드값 
+			//let type =  $(".search_area select").val();		//select 중하나 담음
+	        actionForm.find("input[name='keyword']").val(inputVal);		//폼에 값 지정
+	        actionForm.find("input[name='pageNum']").val(1);
+	        // 검색을 통해 목록를 이동했을 때 1페이지로 이동을 지정
+	        actionForm.submit();
+	        // 검색 후 경로는 그대로  listPage 이므로 그대로 둠
+		});
+	</script>
 </body>
 </html>
