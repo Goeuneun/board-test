@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="container p-3 my-3">
-		<a href="boardlist"><h2>Spring 게시판</h2></a>
+		<a href="listPage"><h2>Spring 게시판</h2></a>
 		<h4>로그인 창</h4>
 		<p>로그인 하시려면 아이디와 비밀번호를 입력해주세요</p>
 		<form action="loginSelect" class="was-validated" method="post">
@@ -33,7 +33,7 @@
 					name="pw" required>
 				<div class="invalid-feedback">입력되지 않았습니다.</div>
 			</div>
-			<button type="submit" class="btn btn-primary">로그인</button>
+			<button id="login" type="submit" class="btn btn-primary">로그인</button>
 			<a href="join"><button type="button" class="btn btn-warning">회원가입</button></a>
 			<button onClick="history.back();" type="button"
 				class="btn btn-outline-dark">뒤로가기</button>
@@ -41,4 +41,29 @@
 		</form>
 	</div>
 </body>
+
+	<script>
+	
+/* 	$(document).ready(
+		$('#login').click(function(){
+			$.ajax({
+				url : "loginSelect",
+				type : "post",
+				dataType : "text",
+				success : function(res){
+					if(res != null){
+						alert(res); 	
+					} else {
+						alert("로그인 실패!"); 		
+					}
+				},
+				error : function(res){
+					console.log(res);
+				}
+			});
+		});
+	); */
+	
+	
+	</script>
 </html>

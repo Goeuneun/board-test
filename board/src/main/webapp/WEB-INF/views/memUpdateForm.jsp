@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="container p-3 my-3">
-		<a href="boardlist"><h2>Spring 게시판</h2></a>
+		<a href="listPage"><h2>Spring 게시판</h2></a>
 		<h4>회원정보수정</h4>
 		<p>회원가입을 위한 정보를 입력해주세요</p>
 		<form action="updateInfo" class="was-validated" method="post">

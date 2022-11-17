@@ -36,4 +36,48 @@
 		where idx = #{idx}
 	</delete>
 	
+	<select id="listpage" parameterType="int" resultType="kr.web.vo.BoardVO">
+		<![CDATA[
+		select *
+		from board
+		order by indate desc
+		limit #{page}, 10
+		]]>
+		
+	</select>
+	
+	<select id="listCriteria" parameterType="kr.web.vo.Criteria" resultType="kr.web.vo.BoardVO">
+		select *
+		from board
+		order by indate desc
+		limit #{skip}, #{amount}
+	
+	</select>
+	
+	<select id="countPaging" resultType="int" >
+		<![CDATA[
+		select count(idx)
+		from board
+		where idx > 0
+		]]>
+	
+	</select>
+	<select id="boardTotal" resultType="int">
+		<![CDATA[
+		select count(idx)
+		from board
+		where idx > 0
+		]]>	</select>
+	
+	<select id="paginList" parameterType="kr.web.vo.Paging" resultType="kr.web.vo.BoardVO">
+		<![CDATA[
+		select *
+		from board
+		order by indate desc
+
+		limit #{startList}, #{endIndex}
+		]]>
+	
+	</select>
+	
 </mapper>

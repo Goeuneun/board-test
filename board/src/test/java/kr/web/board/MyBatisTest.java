@@ -8,10 +8,12 @@ import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(JUnit4ClassRunner.class)
-@Configuration("file:src/main/webapp/WEB-INF/spring/*.xml" )
+@ContextConfiguration ( locations = "file:src/main/webapp/WEB-INF/spring/*.xml" )
 public class MyBatisTest {
+	
 	@Inject
 	private SqlSessionFactory sqlFactory;
 

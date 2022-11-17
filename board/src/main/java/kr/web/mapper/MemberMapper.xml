@@ -10,6 +10,7 @@
 		select * 
 		from member
 		where id = #{id}
+		and pw = #{pw}
 	</select>
 	
 	<update id="updateInfo" parameterType="kr.web.vo.MemberVO" >

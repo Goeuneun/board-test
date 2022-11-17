@@ -80,7 +80,7 @@ public class MemberController {
 	//id체크
 	@RequestMapping("/idCheck")
 	public @ResponseBody MemberVO idCheck(String id) {
-		System.out.println("아이디 중복체크 실행 : "+id);
+		System.out.println("아이디 중복체크 실행 : " + id);
 		MemberVO vo = service.idCheck(id);
 		System.out.println(vo);
 		return vo;

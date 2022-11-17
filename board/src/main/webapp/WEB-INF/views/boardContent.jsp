@@ -41,18 +41,48 @@
 					</tr>
 				</table>
 				<c:if test="${info.id eq vo.writer || info.id eq 'admin'}">
-					<a href="boardUpdateForm?idx=${vo.idx}"><button
-							class="btn btn-outline-primary btn-sm">수정</button></a>
-					<a href="boardDelete?idx=${vo.idx}"><button
+					<a id="modify"><button type="button"
+							class="btn btn-outline-primary btn-sm" >수정</button></a>
+					<a href="boardDelete?idx=${vo.idx}" id="list_delete"><button
 							class="btn btn-warning btn-sm">삭제</button></a>
 				</c:if>
-				<button onClick="history.back();" type="button"
-					class="btn btn-outline-dark btn-sm">뒤로가기</button>
-
-
+				<a id = "list_btn"><button  type="button"
+					class="btn btn-outline-dark btn-sm">목록페이지</button></a>
 			</div>
 			<div class="card-footer">게시판</div>
+			
+			<form id="infoForm" action="boardUpdateForm" method="get">
+				<input type="hidden" id="idx" name="idx" value="${vo.idx}"/>
+				<input type="hidden" name="pageNum" value="${cri.pageNum}"/>
+				<input type="hidden" name="amount" value="${cri.amount}"/>
+			</form>
 		</div>
 	</div>
+	
+	
+	
+	<script>
+	
+	let form = $("#infoForm");
+	
+	// 목록버튼 이벤트 -> idx 지우고 매핑 listPage
+	$("#list_btn").on("click",function(e){
+		form.find("#idx").remove();
+		form.attr("action", "listPage");
+		form.submit();
+		
+	});
+	
+	
+	// 수정버튼 이벤트 -> 현재페이지와 개수 정보, idx 컨트롤러로보냄
+	$("#modify").on("click",function(e){
+		form.attr("action", "boardUpdateForm");
+		form.submit();
+		
+	});
+	
+	
+	
+	</script>
 </body>
 </html>
