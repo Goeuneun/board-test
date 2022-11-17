@@ -1,5 +1,4 @@
 ## Spring Board  기본 CRUD
-페이지가 못생긴 이유는 따로 스타일 지정을 안했음 데헷~
 
 <img width="541" alt="image" src="https://user-images.githubusercontent.com/101301507/200513670-ae98a454-db78-43c3-aba1-33342a9332aa.png">
 
