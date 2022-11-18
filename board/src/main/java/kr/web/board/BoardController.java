@@ -1,12 +1,9 @@
 package kr.web.board;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -15,8 +12,6 @@ import kr.web.service.BoardService;
 import kr.web.vo.BoardVO;
 import kr.web.vo.Criteria;
 import kr.web.vo.PageMaker;
-import kr.web.vo.Paging;
-import kr.web.vo.Search;
 
 @Controller
 public class BoardController {
@@ -76,12 +71,6 @@ public class BoardController {
 		
 	}
 
-	// 뒤로가기 버튼클릭시 조회수 카운트
-//	@RequestMapping("/updateCnt")
-//	public String updateCnt(int idx) throws Exception {
-//		service.updateCnt(idx);
-//		return "boardlist";
-//	}
 
 	// 폼 페이지 이동
 	@RequestMapping("/boardInsertForm")

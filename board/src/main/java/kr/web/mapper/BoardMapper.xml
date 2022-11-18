@@ -61,16 +61,7 @@
 		delete from board
 		where idx = #{idx}
 	</delete>
-	
-	<select id="listpage" parameterType="int" resultType="kr.web.vo.BoardVO">
-		<![CDATA[
-		select *
-		from board
-		order by indate desc
-		limit #{page}, 10
-		]]>
-		
-	</select>
+
 	
 	<select id="listCriteria" parameterType="kr.web.vo.Criteria" resultType="kr.web.vo.BoardVO">
 		select *
@@ -88,22 +79,13 @@
 		from board
 	
 	</select>
+	
 	<select id="boardTotal" resultType="int" parameterType="kr.web.vo.Criteria">
 		select count(*) from board
 		<if test="keyword != null">
 			<include refid="criteria"></include>
 		</if>
 	</select>
-	
-	<select id="paginList" parameterType="kr.web.vo.Paging" resultType="kr.web.vo.BoardVO">
-		<![CDATA[
-		select *
-		from board
-		order by indate desc
 
-		limit #{startList}, #{endIndex}
-		]]>
-	
-	</select>
 	
 </mapper>
