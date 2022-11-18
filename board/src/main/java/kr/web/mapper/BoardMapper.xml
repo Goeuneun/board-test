@@ -2,6 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.web.mapper.BoardMapper">
 
+
+	<!-- 다른구문에서 재사용할 태그!! (검색조건) -->
+	<!--prefix - 맨앞 추가, suffix 맨뒤 추가,  prefixOverrides 맨앞의 해당 단어찾아서 없앰 -->
+	<sql id="criteria">
+		<trim prefix="where (" suffix=")" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like concat('%',#{keyword},'%') 
+						</when>
+						<when test="type == 'C'.toString()">
+							contents like concat('%',#{keyword},'%') 
+						</when>
+						<when test="type == 'W'.toString()">
+							writer like concat('%',#{keyword},'%' )
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+
+
 	<select id="boardlist" resultType="kr.web.vo.BoardVO">
 		select * 
 		from board 
@@ -50,7 +76,7 @@
 		select *
 		from board
 		<if test="keyword != null">
-		where title like concat('%',#{keyword},'%')
+			<include refid="criteria"></include>
 		</if>
 		order by indate desc
 		limit #{skip}, #{amount}
@@ -65,9 +91,9 @@
 	<select id="boardTotal" resultType="int" parameterType="kr.web.vo.Criteria">
 		select count(*) from board
 		<if test="keyword != null">
-		where title like concat('%',#{keyword},'%')
+			<include refid="criteria"></include>
 		</if>
-		</select>
+	</select>
 	
 	<select id="paginList" parameterType="kr.web.vo.Paging" resultType="kr.web.vo.BoardVO">
 		<![CDATA[

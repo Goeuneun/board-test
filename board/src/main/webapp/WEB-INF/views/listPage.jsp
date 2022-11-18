@@ -68,56 +68,61 @@
 				</table>
 
 			</div>
-			
-			
-			<!-- 페이징 -->
-		<div class="card-footer">	
-			<div class="pageInfo_wrap">
-				<div class="pageInfo_area">
-					<ul class="pagination" style="float: center;">
-						<c:if test="${pageMaker.prev}">
-							<li class="page-item"><a class="page-link"
-								href="${pageMaker.startPage-1}">Previous</a></li>
-						</c:if>
-						<c:forEach begin="${pageMaker.startPage}"
-							end="${pageMaker.endPage}" var="num">
-							<li
-								class="page-item ${pageMaker.cri.pageNum == num ? 'active' : '' } ">
-								<a class="page-link" href="${num }"> ${num} </a>
-							</li>
-						</c:forEach>
-						<c:if test="${pageMaker.next }">
-							<li class="page-item"><a class="page-link"
-								href="${pageMaker.endPage +1}">Next</a></li>
-						</c:if>
-					</ul>
-				</div>
-			</div>
-						
-			<!-- 검색 -->
 
-			<div class="form-group row justify-content-center">
-			<div class="search_area" >
-					<select class="form-control form-control-sm" name="type"
-						id="searchType">
-						<option value=""> </option>
-						<option value="title">제목</option>
-						<option value="contents">본문</option>
-						<option value="writer">작성자</option>
-					</select>
-					<input type="text" class="form-control form-control-sm"
-						name="keyword" value="${pageMaker.cri.keyword }" id="keyword">
-				<div>
-					<button class="btn btn-sm btn-primary" name="btnSearch"
-						id="btnSearch">검색</button>
+
+			<!-- 페이징 -->
+			<div class="card-footer">
+				<div class="pageInfo_wrap">
+					<div class="pageInfo_area">
+						<ul class="pagination" style="float: center;">
+							<c:if test="${pageMaker.prev}">
+								<li class="page-item"><a class="page-link"
+									href="${pageMaker.startPage-1}">Previous</a></li>
+							</c:if>
+							<c:forEach begin="${pageMaker.startPage}"
+								end="${pageMaker.endPage}" var="num">
+								<li
+									class="page-item ${pageMaker.cri.pageNum == num ? 'active' : '' } ">
+									<a class="page-link" href="${num }"> ${num} </a>
+								</li>
+							</c:forEach>
+							<c:if test="${pageMaker.next }">
+								<li class="page-item"><a class="page-link"
+									href="${pageMaker.endPage +1}">Next</a></li>
+							</c:if>
+						</ul>
+					</div>
 				</div>
+
+				<!-- 검색 -->
+
+				<div class="form-group row justify-content-center">
+					<div class="search_area">
+						<select class="form-control form-control-sm" name="type"
+							id="searchType">
+							<option value="" <c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
+							<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
+							<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
+							<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
+							<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목 + 내용</option>
+							<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':'' }"/>>제목 + 작성자</option>
+							<option value="TCW" <c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목 + 내용 + 작성자</option>
+						</select> <input type="text" class="form-control form-control-sm"
+							name="keyword" value="${pageMaker.cri.keyword }" id="keyword">
+						<div>
+							<button class="btn btn-sm btn-primary" name="btnSearch"
+								id="btnSearch">검색</button>
+						</div>
+					</div>
 				</div>
-			</div>
-			<form id="actionForm" action="listPage" method="get">
-				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" />
-				<input type="hidden" name="amount" value="${pageMaker.cri.amount}" />
-				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">	
-			</form>
+				<form id="actionForm" action="listPage" method="get">
+					<input type="hidden" name="pageNum"
+						value="${pageMaker.cri.pageNum}" /> <input type="hidden"
+						name="amount" value="${pageMaker.cri.amount}" /> <input
+						type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+					<input type="hidden" name="type" value="${pageMaker.cri.type }">	
+						
+				</form>
 			</div>
 		</div>
 	</div>
@@ -173,16 +178,26 @@
 							actionForm.attr("action", "boardContent");
 							actionForm.submit();
 						});
-		
-		$(".search_area button").on("click",function(e){
+
+		$(".search_area button").on("click", function(e) {
 			e.preventDefault();
-			let inputVal = $("input[name='keyword']").val();	//입력받은 키워드값 
-			//let type =  $(".search_area select").val();		//select 중하나 담음
-	        actionForm.find("input[name='keyword']").val(inputVal);		//폼에 값 지정
-	        actionForm.find("input[name='pageNum']").val(1);
-	        // 검색을 통해 목록를 이동했을 때 1페이지로 이동을 지정
-	        actionForm.submit();
-	        // 검색 후 경로는 그대로  listPage 이므로 그대로 둠
+			let keyword = $("#keyword").val(); //입력받은 키워드값 (id)
+			let type =  $(".search_area select").val();		//select 중하나 담음
+			
+			if(!type){
+				alert("검색할 종류를 선택하세요!")
+				return false;
+			} 
+			if(!keyword){
+				alert("검색어를 입력하세요!")
+				return false;
+			}
+			actionForm.find("input[name='type']").val(type);
+			actionForm.find("input[name='keyword']").val(keyword); //폼에 값 지정
+			actionForm.find("input[name='pageNum']").val(1);
+			// 검색을 통해 목록를 이동했을 때 1페이지로 이동을 지정
+			actionForm.submit();
+			// 검색 후 경로는 그대로  listPage 이므로 그대로 둠
 		});
 	</script>
 </body>
