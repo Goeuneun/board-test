@@ -148,6 +148,20 @@
 				if (result === "delete success") {
 					alert("삭제가 완료되었습니다.");
 				}
+				if (result === "login succsess") {
+					alert("로그인 되었습니다.");
+				} 
+				if (result === "login fail") {
+					alert("로그인 실패했습니다.");
+					
+				}
+				if (result === "logout succsess"){
+					alert("로그아웃 되었습니다.");
+				}
+				if (result === "update succsess"){
+					alert("회원정보가 수정 되었습니다.");
+				}
+				
 			}
 
 		});

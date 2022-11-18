@@ -42,27 +42,20 @@
 	</div>
 </body>
 
-	<script>
+<script>
 	
-/* 	$(document).ready(
-		$('#login').click(function(){
-			$.ajax({
-				url : "loginSelect",
-				type : "post",
-				dataType : "text",
-				success : function(res){
-					if(res != null){
-						alert(res); 	
-					} else {
-						alert("로그인 실패!"); 		
-					}
-				},
-				error : function(res){
-					console.log(res);
-				}
-			});
-		});
-	); */
+ 	$(document).ready(function(){
+ 		let result = '<c:out value = "${result}"/>'
+ 		checkAlert(result);
+ 		console.log(result);
+ 		function checkAlert(result){
+ 			if(result === ''){
+ 	 			return;
+ 	 		}if (result === "join success") {
+				alert("회원가입이 완료되었습니다.");
+			}
+ 		}
+ 	}); 
 	
 	
 	</script>

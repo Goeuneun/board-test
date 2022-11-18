@@ -33,7 +33,7 @@
 		</c:when>
 		<c:otherwise>
 			<div class="container mt-3">
-				<a href="boardlist"><h2>Spring 게시판</h2></a>
+				<a href="listPage"><h2>Spring 게시판</h2></a>
 				<div class="container p-3 my-3">
 					<div class="card-header">
 						<h4>글 작성 폼입니다</h4>
@@ -70,19 +70,36 @@
 							<button id="sub" type="submit"
 								class="btn btn-outline-primary btn-sm">제출</button>
 							<button type="reset" class="btn btn-warning btn-sm">초기화</button>
-							<button onClick="history.back();" type="button"
+							<button id = "list_btn" type="button"
 								class="btn btn-outline-dark btn-sm">뒤로가기</button>
 						</form>
+						
+				<form id="infoForm" action="listPage" method="get">
+				<input type="hidden" name="pageNum" value="${cri.pageNum}"/>
+				<input type="hidden" name="amount" value="${cri.amount}"/>
+				<input type="hidden" name="keyword" value="${cri.keyword }"/>
+				<input type="hidden" name="type" value="${cri.type }">
+				
+			</form>
 					</div>
 					<div class="card-footer">게시판</div>
 				</div>
 			</div>
 		</c:otherwise>
 	</c:choose>
+	
+	
 	<script>
-		$('#sub').click(function() {
-			alert("게시글이 등록되었습니다!");
-		});
+	
+	let form = $("#infoForm");
+	// 목록버튼 이벤트 -> 검색기준 페이징 정보 보냄 listPage
+	$("#list_btn").on("click",function(e){
+		form.find("#idx").remove();
+		form.attr("action", "listPage");
+		form.submit();
+	});
+	
+	
 	</script>
 </body>
 </html>

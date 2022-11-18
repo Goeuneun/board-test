@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.web.service.MemberService;
 import kr.web.vo.MemberVO;
@@ -32,9 +33,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, RedirectAttributes rttr) {
 		session.removeAttribute("info");
-		return "redirect:/boardlist";
+		rttr.addFlashAttribute("result","logout succsess");
+		return "redirect:/listPage";
 
 	}
 	
@@ -45,34 +47,39 @@ public class MemberController {
 	
 	// 가입
 	@RequestMapping("/joinInsert")
-	public String joinInsert(MemberVO vo) {
+	public String joinInsert(MemberVO vo, RedirectAttributes rttr) {
 		System.out.println("회원가입실행"+vo.toString());
 		service.register(vo);
+		rttr.addFlashAttribute("result","join succsess");
 		return "redirect:/login";
 		
 	}
 	
 	//로그인 
 	@RequestMapping("/loginSelect") 
-	public String loginSelect(HttpSession session, MemberVO vo) {
+	public String loginSelect(HttpSession session, MemberVO vo, RedirectAttributes rttr) {
 		System.out.println("로그인기능실행");
 		MemberVO info =  service.login(vo);
 		System.out.println(info);
 		if(info!=null) {
 			session.setAttribute("info", info);
+			rttr.addFlashAttribute("result","login succsess");
+		} else {
+			rttr.addFlashAttribute("result","login fail");
 		}
-		return "redirect:/boardlist";
+		
+		return "redirect:/listPage";
 	}
 	
 	
 	//회원정보수정
 	@RequestMapping("/updateInfo")
-	public String updateInfo(HttpSession session, MemberVO vo) {
+	public String updateInfo(HttpSession session, MemberVO vo, RedirectAttributes rttr) {
 		System.out.println("회원정보수정실행"+vo.toString());
 		service.update(vo);
 		session.setAttribute("info", vo);
-		return "redirect:/boardlist";
-	
+		rttr.addFlashAttribute("result","update succsess");
+		return "redirect:/listPage";
 	}
 	
 	
