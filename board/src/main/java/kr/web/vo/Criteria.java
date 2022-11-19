@@ -6,14 +6,13 @@ public class Criteria {
 	private int amount; // 한페이지당 보여줄 데이터양
 	private int skip; // 스킵할 페이지 (MySQL limit 구문에서 필요함)
 	private String keyword;		//검색키워드
-	private String type;		// 검색 타입 제목, 작성자 등등
+	private String type;		// 검색조건  제목, 작성자, 본문, 복합검색 등등
 	private String[] typeArr;	
-	// 타입변수에 데이터가 들어왔을때 배열형식으로 담음 
-	
+	// 타입변수에 데이터(검색조건)가 들어왔을때 배열형식으로 담음 
 
 	// 기본값 생성자 세팅
 	public Criteria() {
-		this(1, 10);
+		this(1, 5);
 		this.skip=0;
 
 	}
@@ -66,7 +65,7 @@ public class Criteria {
 		return type;
 	}
 
-	// 받아온 타입변수를 split함수로 쪼개서 배열에 넣어줌
+	// TCW 와 같이 검색조건을 split함수로 쪼개서 배열에 넣어줌
 	public void setType(String type) {
 		this.type = type;
 		this.typeArr = type.split("");
@@ -79,6 +78,7 @@ public class Criteria {
 	public void setTypeArr(String[] typeArr) {
 		this.typeArr = typeArr;
 	}
+
 
 
 }

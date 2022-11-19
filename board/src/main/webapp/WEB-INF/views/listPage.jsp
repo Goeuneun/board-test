@@ -22,28 +22,81 @@
 
 </head>
 <body>
-	<div class="container mt-3">
-		<a href="listPage"><h2>Spring 게시판</h2></a>
-		<div class="container p-3 my-3">
+	<div class="container-md ">
+		<div class="container-md p-3 mt-3">
 			<div class="card-header">
-				<h4>Board List</h4>
 				<c:choose>
 					<c:when test="${not empty info}">
-						<h5>${info.nick}</h5> 님 환영합니다.
-						<div style="float: right;">
-							<a href="boardInsertForm"><button
-									class="btn btn-outline-primary btn-sm">글쓰기</button></a> <a
-								href="logout"><button type="button"
-									class="btn btn-outline-primary btn-sm">로그아웃</button></a> <a
-								href="memUpdateForm"><button type="button"
-									class="btn btn-warning btn-sm">회원정보수정</button></a>
+						<div class="row">
+							<div class="col">
+								<h5 style="display: inline;">${info.nick}</h5>
+								<span>님 환영합니다.</span>
+							</div>
+							<div class="col">
+								<a href="logout"><button type="button"
+										class="btn btn-outline-primary btn-sm" style="float: right;">로그아웃</button></a>
+								<a href="memUpdateForm"><button type="button"
+										class="btn btn-warning btn-sm"
+										style="float: right; margin-right: 10px;">회원정보수정</button></a> <a
+									href="boardInsertForm"><button
+										class="btn btn-outline-primary btn-sm"
+										style="float: right; margin-right: 10px;">글쓰기</button></a>
+							</div>
 						</div>
 					</c:when>
 					<c:otherwise>
-						<a href="login"><button type="button"
-								class="btn btn-outline-primary btn-sm">로그인</button></a>
+						<div class="row">
+							<div class="col">
+								<a href="login"><button type="button"
+										class="btn btn-outline-primary btn-sm" style="float: right;">로그인</button></a>
+								<a href="join"><button type="button"
+										class="btn btn-outline-primary btn-sm" style="float: right; margin-right: 10px;">회원가입</button></a>
+								<h6 style="text-align: center; display: inline;">로그인한 회원만 글
+									작성이 가능합니다.</h6>
+							</div>
+						</div>
 					</c:otherwise>
 				</c:choose>
+			</div>
+			<div class="container p-3 my-3 border text-center">
+				<a href="listPage"><h3>Spring 게시판</h3></a>
+			</div>
+			<!-- 검색 -->
+
+
+
+			<div class="card-body">
+				<div class="search_area">
+					<div class="row">
+						<div class="col-6">
+							<select class="" style="float: right;" name="type"
+								id="searchType">
+								<option value=""
+									<c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>선택</option>
+								<option value="T"
+									<c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
+								<option value="C"
+									<c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
+								<option value="W"
+									<c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
+								<option value="TC"
+									<c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목+내용</option>
+								<option value="TW"
+									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':'' }"/>>제목+작성자</option>
+								<option value="TCW"
+									<c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목+내용+작성자</option>
+							</select>
+						</div>
+						<div class="col-5">
+							<input type="text" class="form-control form-control-sm"
+								name="keyword" value="${pageMaker.cri.keyword }" id="keyword" />
+						</div>
+						<div class="col-1">
+							<button class="btn btn-sm btn-primary" name="btnSearch"
+								id="btnSearch" style="float: right;">검색</button>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="card-body">
 				<table class="table table-hover">
@@ -51,79 +104,67 @@
 						<td>번호</td>
 						<td>제목</td>
 						<td>작성자</td>
-						<td>조회수</td>
 						<td>작성일</td>
+						<td>조회수</td>
 					</tr>
-					<c:set var="rowNo" value="${pageMaker.total }"></c:set>
-					<c:forEach var="vo" items="${list}" varStatus="i">
-						<tr>
-							<td>${rowNo}</td>
-							<td><a class="move" href="${vo.idx}"> ${vo.title}</a></td>
-							<td>${vo.writer}</td>
-							<td>${vo.count}</td>
-							<td>${vo.indate}</td>
-						</tr>
-						<c:set var="rowNo" value="${rowNo-1 }"></c:set>
-					</c:forEach>
+					<c:set var="rowNum" value="${pageMaker.rowNum }"></c:set>
+					<c:choose>
+						<c:when test="${empty list}">
+							<tr>
+								<td colspan="5" style="text-align: center;"><span>
+										만족하는 검색 결과가 없습니다. </span></td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="vo" items="${list}" varStatus="i">
+								<tr>
+									<td>${rowNum}</td>
+									<td><a class="move" href="${vo.idx}"> ${vo.title}</a></td>
+									<td>${vo.writer}</td>
+									<td>${vo.indate}</td>
+									<td>${vo.count}</td>
+								</tr>
+								<c:set var="rowNum" value="${rowNum-1 }"></c:set>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</table>
 
 			</div>
 
-
-			<!-- 페이징 -->
-			<div class="card-footer">
-				<div class="pageInfo_wrap">
-					<div class="pageInfo_area">
-						<ul class="pagination" style="float: center;">
-							<c:if test="${pageMaker.prev}">
-								<li class="page-item"><a class="page-link"
-									href="${pageMaker.startPage-1}">Previous</a></li>
-							</c:if>
-							<c:forEach begin="${pageMaker.startPage}"
-								end="${pageMaker.endPage}" var="num">
-								<li
-									class="page-item ${pageMaker.cri.pageNum == num ? 'active' : '' } ">
-									<a class="page-link" href="${num }"> ${num} </a>
-								</li>
-							</c:forEach>
-							<c:if test="${pageMaker.next }">
-								<li class="page-item"><a class="page-link"
-									href="${pageMaker.endPage +1}">Next</a></li>
-							</c:if>
-						</ul>
-					</div>
+		</div>
+		<!-- 페이징 -->
+		<div class="card-footer">
+			<div class="container-sm text-center" style="float: center;">
+				<div class="pageInfo_area">
+					<ul class="pagination" style="display: inline-flex">
+						<c:if test="${pageMaker.prev}">
+							<li class="page-item"><a class="page-link"
+								href="${pageMaker.startPage-1}">Previous</a></li>
+						</c:if>
+						<c:forEach begin="${pageMaker.startPage}"
+							end="${pageMaker.endPage}" var="num">
+							<li
+								class="page-item ${pageMaker.cri.pageNum == num ? 'active' : '' } ">
+								<a class="page-link" href="${num }"> ${num} </a>
+							</li>
+						</c:forEach>
+						<c:if test="${pageMaker.next }">
+							<li class="page-item"><a class="page-link"
+								href="${pageMaker.endPage +1}">Next</a></li>
+						</c:if>
+					</ul>
 				</div>
-
-				<!-- 검색 -->
-
-				<div class="form-group row justify-content-center">
-					<div class="search_area">
-						<select class="form-control form-control-sm" name="type"
-							id="searchType">
-							<option value="" <c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
-							<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
-							<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
-							<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
-							<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목 + 내용</option>
-							<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':'' }"/>>제목 + 작성자</option>
-							<option value="TCW" <c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목 + 내용 + 작성자</option>
-						</select> <input type="text" class="form-control form-control-sm"
-							name="keyword" value="${pageMaker.cri.keyword }" id="keyword">
-						<div>
-							<button class="btn btn-sm btn-primary" name="btnSearch"
-								id="btnSearch">검색</button>
-						</div>
-					</div>
-				</div>
-				<form id="actionForm" action="listPage" method="get">
-					<input type="hidden" name="pageNum"
-						value="${pageMaker.cri.pageNum}" /> <input type="hidden"
-						name="amount" value="${pageMaker.cri.amount}" /> <input
-						type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
-					<input type="hidden" name="type" value="${pageMaker.cri.type }">	
-						
-				</form>
 			</div>
+
+			<form id="actionForm" action="listPage" method="get">
+				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" />
+				<input type="hidden" name="amount" value="${pageMaker.cri.amount}" />
+				<input type="hidden" name="keyword"
+					value="${pageMaker.cri.keyword }"> <input type="hidden"
+					name="type" value="${pageMaker.cri.type }">
+
+			</form>
 		</div>
 	</div>
 	<script>
@@ -150,18 +191,18 @@
 				}
 				if (result === "login succsess") {
 					alert("로그인 되었습니다.");
-				} 
+				}
 				if (result === "login fail") {
 					alert("로그인 실패했습니다.");
-					
+
 				}
-				if (result === "logout succsess"){
+				if (result === "logout succsess") {
 					alert("로그아웃 되었습니다.");
 				}
-				if (result === "update succsess"){
+				if (result === "update succsess") {
 					alert("회원정보가 수정 되었습니다.");
 				}
-				
+
 			}
 
 		});
@@ -196,13 +237,13 @@
 		$(".search_area button").on("click", function(e) {
 			e.preventDefault();
 			let keyword = $("#keyword").val(); //입력받은 키워드값 (id)
-			let type =  $(".search_area select").val();		//select 중하나 담음
-			
-			if(!type){
+			let type = $(".search_area select").val(); //select 중하나 담음
+
+			if (!type) {
 				alert("검색할 종류를 선택하세요!")
 				return false;
-			} 
-			if(!keyword){
+			}
+			if (!keyword) {
 				alert("검색어를 입력하세요!")
 				return false;
 			}

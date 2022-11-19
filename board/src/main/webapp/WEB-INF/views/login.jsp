@@ -17,9 +17,8 @@
 </head>
 <body>
 	<div class="container p-3 my-3">
-		<a href="listPage"><h2>Spring 게시판</h2></a>
-		<h4>로그인 창</h4>
-		<p>로그인 하시려면 아이디와 비밀번호를 입력해주세요</p>
+		<a href="listPage"><h3 style="text-align:center;">Spring 게시판</h3></a>
+		<h6>로그인 창</h6>
 		<form action="loginSelect" class="was-validated" method="post">
 			<div class="form-group">
 				<label for="uname">Id:</label> <input type="text"
@@ -40,11 +39,9 @@
 
 		</form>
 	</div>
-</body>
-
 <script>
 	
- 	$(document).ready(function(){
+$(document).ready(function() {
  		let result = '<c:out value = "${result}"/>'
  		checkAlert(result);
  		console.log(result);
@@ -55,8 +52,10 @@
 				alert("회원가입이 완료되었습니다.");
 			}
  		}
- 	}); 
+}); 
 	
 	
 	</script>
+</body>
+
 </html>

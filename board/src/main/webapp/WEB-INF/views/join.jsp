@@ -15,12 +15,11 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="/main/webapp/resource/js/join_check.js"></script>
 
 </head>
 <body>
 	<div class="container p-3 my-3">
-		<a href="listPage"><h2>Spring 게시판</h2></a>
+		<a href="listPage"><h3 style="text-align:center;">Spring 게시판</h3></a>
 		<h4>회원가입</h4>
 		<p>회원가입을 위한 정보를 입력해주세요</p>
 		<form action="joinInsert" class="was-validated" method="post">
@@ -51,9 +50,9 @@
 			<div class="form-group">
 				<label for="phone">Phone Number:</label> <input type="text"
 					class="form-control chk" id="phone" readonly="readonly"
-					placeholder="휴대전화번호를 입력하세요" name="phone" required maxlength="10">
-				<div class="valid-feedback">입력값이 유효합니다.</div>
-				<div class="invalid-feedback">최대 10자리까지 가능합니다.</div>
+					placeholder="000-0000-0000" name="phone" required >
+				<div class="valid-feedback"><span id="phoneVal"></span></div>
+				<div class="invalid-feedback">형식에 맞는 번호를 입력하세요</div>
 			</div>
 			<button id="sub" type="submit" class="btn btn-primary">회원가입</button>
 			<button type="reset" class="btn btn-warning btn-sm">초기화</button>
@@ -64,6 +63,28 @@
 	</div>
 </body>
 <script>
+
+
+
+	$("#phone").keyup(function(){
+		const regex = /\d{3}-\d{4}-\d{4}/; 
+		let phone = $(this).val();
+		console.log(phone);
+		if(phone.match(regex)==null){
+			$('#phoneVal').text('잘못된 번호형식입니다.');
+			$('#phoneVal').css('color', 'red');
+			$("#sub").attr("disabled", true);
+		} else {
+			$('#phoneVal').text('올바른 번호형식입니다.');
+			$('#phoneVal').css('color', 'green');
+			$("#sub").attr("disabled", false);
+			
+			
+		}
+
+	});
+
+	
 	$('.chk').click(function() {
 		if (this.getAttribute('readonly') == 'readonly') {
 			alert('아이디 중복체크를 먼저 해주세요');
@@ -81,7 +102,7 @@
 	 */
 
 	$('#idCheck').click(function() {
-		var id = $('#id').val();
+		let id = $('#id').val();
 		$.ajax({
 			url : "idCheck",
 			type : "post",
@@ -111,7 +132,7 @@
 
 	};
 
-	$('.chk').on('keyup', function() {
+/* 	$('.chk').on('keyup', function() {
 		validate($(this));
 	});
 
@@ -124,6 +145,6 @@
 	function display_status(div, data) {
 		div.text(data.desc);
 		div.addClass(data.code);
-	}
+	} */
 </script>
 </html>

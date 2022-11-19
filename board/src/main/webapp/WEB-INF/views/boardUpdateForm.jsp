@@ -21,7 +21,7 @@
 </head>
 <body>
 	<div class="container mt-3">
-		<a href="listPage"><h2>Spring 게시판</h2></a>
+		<a href="listPage"><h3 style="text-align:center;">Spring 게시판</h3></a>
 		<div class="container p-3 my-3">
 			<div class="card-header">
 				<h4>게시판 수정 폼입니다.</h4>

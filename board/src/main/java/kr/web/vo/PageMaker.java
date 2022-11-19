@@ -11,12 +11,14 @@ public class PageMaker {
 	private boolean prev, next;
 	// 끝 페이지 번호보다 많은 양의 데이터가 존재하면 뒤로(next) 갈 수 있어야됨
 	private Criteria cri;
+	
+	private int rowNum;		// 행번호 출력을위한변수
 
+	
 	public void setCri(Criteria cri) {
 		this.cri = cri;
 	}
 	
-
 //	public void setTotal(int total) {
 //		this.total = total;
 //		calcData();
@@ -40,6 +42,15 @@ public class PageMaker {
 
 		this.prev = this.startPage > 1;
 		this.next = this.endPage < realEndpage;
+		
+		if(cri.getPageNum()==1) {
+			this.rowNum = total;
+		}else {
+			
+			this.rowNum = total - (cri.getPageNum()-1) * cri.getAmount();
+		}
+		//행번호출력함
+
 
 	}
 

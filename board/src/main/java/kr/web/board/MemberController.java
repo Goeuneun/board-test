@@ -50,7 +50,7 @@ public class MemberController {
 	public String joinInsert(MemberVO vo, RedirectAttributes rttr) {
 		System.out.println("회원가입실행"+vo.toString());
 		service.register(vo);
-		rttr.addFlashAttribute("result","join succsess");
+		rttr.addFlashAttribute("result","join success");
 		return "redirect:/login";
 		
 	}
