@@ -29,11 +29,6 @@ org.apache.catalina.core.StandardContext backgroundProcess 경고: 로더 [Webap
 컨트롤러 - 매퍼 - jsp 순으로 만들어줬음..
 
 
-----
-### 회원가입, 중복체크 등 수정 및 삭제는 관리자나 글쓴이만 가능하게(id로 판별함)
-
-<img width="398" alt="image" src="https://user-images.githubusercontent.com/101301507/200514027-9c1d1c62-fb8b-44cf-b75b-e7e2edd3feed.png">
 
 ------
-파일업로드도 진행해볼 예정이다.
-
+페이징, 검색 o
