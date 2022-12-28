@@ -1,6 +1,5 @@
-## Spring Board  기본 CRUD
+Spring Board  기본 CRUD
 
-<img width="541" alt="image" src="https://user-images.githubusercontent.com/101301507/200513670-ae98a454-db78-43c3-aba1-33342a9332aa.png">
 
 
 스프링 환경설정하면서 발생한 주요 이슈
